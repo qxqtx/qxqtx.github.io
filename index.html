@@ -314,10 +314,14 @@
       
         
           
-            <h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>该文章重点提出了一个三方模型，如下图所示，其中crawler被认为是可信任的，而server是不可信任的。该方案中，crawler利用Merkle hash tree对web pages 构造了一个authenticated data structure，利用bilinear pairing方法为web pages生成一个signed digest。其中（1）authenticated data structure发送给server供其查询；（2）signed digest为公开信息，供server为查询结果计算proof信息，以及供client对server的搜索结果进行验证。</p>
-<h2 id="结果验证"><a href="#结果验证" class="headerlink" title="结果验证"></a>结果验证</h2><p>该方法可以完成多关键字检测，并且可确保结果的正确性（correctness）、完整性（completeness）以及freshness。</p>
+          主要内容该文章重点提出了一个三方模型，如下图所示，其中crawler被认为是可信任的，而server是不可信任的。该方案中，crawler利用Merkle hash tree对web pages 构造了一个authenticated data structure，利用bilinear pairing
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/21/crawler/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -428,13 +432,14 @@
       
         
           
-            <h2 id="1-主要解决的问题"><a href="#1-主要解决的问题" class="headerlink" title="1.    主要解决的问题"></a>1.    主要解决的问题</h2><p>该文章主要解决了加密数据的多关键字搜索问题。作者提出了一种隐私保护的多关键字文本搜索（multi-keyword text search，MTS）策略，并且可实现相似度排序。<br>作者通过基于关键字频率建立的index以及基于余弦相似测量生成的向量空间模型，来实现了多关键字相似度排序。并且为了提高搜索效率，在Index的实现上，采用了类似B-Tree的MDB-Tree[1]（多维B-Tree）来实现。</p>
-<h2 id="2-背景分析"><a href="#2-背景分析" class="headerlink" title="2.    背景分析"></a>2.    背景分析</h2><p>在明文数据搜索中，通过向量空间的余弦测量来进行相似度分析是非常常用的方式，比如，通过协调（term frequency，TF）*（inverse document frequency，IDF）的权重来评估一个搜索请求和文档的相似度。但是，inverted index暂时还没能用在基于term frequency的多关键字加密搜索中，本文主要实现了这个。<br>此外，现有的基于密文的搜索方案，分为两大类，public key crytopgraphy以及symmetric key crytography。另外还有着重在搜索结果排序的方案。但这些方案都没有实现多关键字搜索，或者就是效率太低O(N)。 本文通过利用MDB-Tree使得效率得到了提高。</p>
-<h2 id="3-论文主要思想"><a href="#3-论文主要思想" class="headerlink" title="3.    论文主要思想"></a>3.    论文主要思想</h2><p>作者提出了两个解决方案，BMTS和EMTS，后者为前者的增强方案。<br>在BMTS方案中，由用户自己生成密钥Ski，包括一个随机向量Si，和两个可逆矩阵M1，i，M2，i，即[Ski，M1，i，M2，i]，通过该密钥对文件Dc进行加密；采用相似的方法对查询关键字Q也进行加密。在服务器中通过余弦测量的方式，可以得到相似度的排序。<br>EMTS方案是对BMTS方案的提高，因为BMTS方案中特定的相似性分布会使得服务器判断出keyword，即暴露了keyword的安全性，因此EMTS方案在加密文件时增加了一个参数，使得计算相似性分布时，每个分布的形态都类似，而在用户端可以恢复这种分布，因此也可以得到top-k的相似度排序结果，并且保护了keyword的安全性。</p>
-<h2 id="4-优缺点分析"><a href="#4-优缺点分析" class="headerlink" title="4.    优缺点分析"></a>4.    优缺点分析</h2><p>该方法实现了多关键字搜索，但是最坏的搜索时间仍然需要O(N)的时间，另外本文实现了Index，Query的机密性保护，以及search pattern的保护，增强方案中还实现了对keyword privacy的保护。</p>
-<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5.    参考文献"></a>5.    参考文献</h2><p>[1] P. Scheuermann and M. Ouksel. Multidimensional b-trees for associative searching in database systems.<br>Information systems, 7(2):123–137, 1982.</p>
+          1.    主要解决的问题该文章主要解决了加密数据的多关键字搜索问题。作者提出了一种隐私保护的多关键字文本搜索（multi-keyword text search，MTS）策略，并且可实现相似度排序。作者通过基于关键字频率建立的index以及基于余弦相似测量生成的向量空间模型，来实现了多关键字相似度
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/21/20160409-周报2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -545,13 +550,14 @@
       
         
           
-            <h2 id="1-主要解决的问题"><a href="#1-主要解决的问题" class="headerlink" title="1.    主要解决的问题"></a>1.    主要解决的问题</h2><p>该文章提出了一个RAndom Space Perturbation(RASP)的方法，来解决Cloud中数据库的安全搜索问题。<br>RASP方法主要就是对数据库数据进行保护，该方法其实是Order Preserving Encryption(OPE)，维度扩展，噪声注入，随机防护等方法的结合。他的前提是攻击者只知道perturb data以及data distribution。</p>
-<h2 id="2-背景分析"><a href="#2-背景分析" class="headerlink" title="2.    背景分析"></a>2.    背景分析</h2><p>数据在云端进行存储、查找和计算非常方便，但是将数据移动到云端就涉及到了数据隐私的问题。一个直接的解决方法是在数据上传到云端之前将其加密，然而现有的基于密文的加密方法都有局限性，比如无法对文件进行搜索[1]。另外还有通过公钥密码系统来解决数据库的安全搜索问题，但需要的存储和计算量都比较大。<br>对数据库的查询，例如range queries和KNN queries如果有一个高效的索引结构的话，可以达到很短的处理时间。然而，目前还没有足够高效的索引结构来支持加密数据的搜索（感觉王聪老师的提出的索引结构可以达到这个要求）。</p>
-<h2 id="3-论文主要思想"><a href="#3-论文主要思想" class="headerlink" title="3.    论文主要思想"></a>3.    论文主要思想</h2><p>它的主要流程如下图所示，首先，它将数据从original space的enclosed range映射到perturb space的irregular shaped space（升维）当中，变换后的数据通过R-Tree结构完成多维高效索引。用户发起查询请求后，先根据R-Tree的索引找到大致位置，然后再根据具体的查询条件进行定位。<br><img src="https://ooo.0o0.ooo/2016/04/10/570b0855da108.png" alt=""></p>
-<h2 id="4-优缺点分析"><a href="#4-优缺点分析" class="headerlink" title="4.    优缺点分析"></a>4.    优缺点分析</h2><p>该论文主要针对数据库等列表数据的安全搜索，并且主要保障range query和KNN query两种类型的请求服务的安全。它可以保护search pattern，抵抗分布式攻击，可以保存range query的拓扑。</p>
-<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5.    参考文献"></a>5.    参考文献</h2><p>[1]. Curtmola, R., Garay, J., Kamara, S., and Ostrovsky, R. Searchable symmetric encryption:improved definitions and efficient constructions. In ACM CCS (2006), pp. 79–88.</p>
+          1.    主要解决的问题该文章提出了一个RAndom Space Perturbation(RASP)的方法，来解决Cloud中数据库的安全搜索问题。RASP方法主要就是对数据库数据进行保护，该方法其实是Order Preserving Encryption(OPE)，维度扩展，噪声注入，随机防护
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/21/20160409-RASP-QS/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
