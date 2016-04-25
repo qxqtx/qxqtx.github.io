@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737be18736.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png">
-<meta property="og:updated_time" content="2016-04-25T13:30:07.825Z">
+<meta property="og:updated_time" content="2016-04-25T13:57:52.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
 <meta name="twitter:description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
@@ -337,7 +337,7 @@
 <h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
 <li>搜索效率为O(m)，m为record的数目，不适合大型的数据库。</li>
 <li>优化方案中提到了性能的优化，但仅限于特定的可以进行binary search的数据库</li>
-<li>可信密钥服务器只维护了一个主密钥Kum以及对称密钥e，整个数据库只分为可访问    与不可访问两类用户。在该场景中是合理的，但在我们的场景中，每一个用户的文件都相当于一个小型数据库，每一个用户甚至每一个文件都需要区分可访问与不可访问。</li>
+<li>可信密钥服务器只维护了一个主密钥Kum以及对称密钥e，整个数据库只分为可访问与不可访问两类用户。在该场景中是合理的，但在我们的场景中，每一个用户的文件都相当于一个小型数据库，每一个用户甚至每一个文件都需要区分可访问与不可访问。</li>
 <li>没有区分搜索权限和下载权限</li>
 </ul>
 <h2 id="五、可改进点（改进方法、启发）"><a href="#五、可改进点（改进方法、启发）" class="headerlink" title="五、可改进点（改进方法、启发）"></a>五、可改进点（改进方法、启发）</h2><ul>

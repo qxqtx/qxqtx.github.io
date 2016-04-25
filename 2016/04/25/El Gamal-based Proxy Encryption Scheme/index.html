@@ -82,34 +82,22 @@
 
 
 
-<meta name="description" content="一、摘要 本文通过基于El-Gamal的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
-二、主要工作 （核心场景、框架或者算法）
-
-
-三、优点（动机、算法、写作）四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）
-一旦发生用户和服务器共谋，整个服务器上的资料将全部泄露。">
+<meta name="description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
+二、主要工作 （核心场景、框架或者算法）本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
 <meta property="og:url" content="http://www.qxqtxzj.cn/2016/04/25/El Gamal-based Proxy Encryption Scheme/index.html">
 <meta property="og:site_name" content="Echo's blog">
-<meta property="og:description" content="一、摘要 本文通过基于El-Gamal的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
-二、主要工作 （核心场景、框架或者算法）
-
-
-三、优点（动机、算法、写作）四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）
-一旦发生用户和服务器共谋，整个服务器上的资料将全部泄露。">
+<meta property="og:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
+二、主要工作 （核心场景、框架或者算法）本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍d">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png">
-<meta property="og:updated_time" content="2016-04-25T12:59:12.792Z">
+<meta property="og:updated_time" content="2016-04-25T14:47:46.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
-<meta name="twitter:description" content="一、摘要 本文通过基于El-Gamal的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
-二、主要工作 （核心场景、框架或者算法）
-
-
-三、优点（动机、算法、写作）四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）
-一旦发生用户和服务器共谋，整个服务器上的资料将全部泄露。">
+<meta name="twitter:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
+二、主要工作 （核心场景、框架或者算法）本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍d">
 <meta name="twitter:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
 
 
@@ -327,14 +315,28 @@
       
 
       
-        <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p> 本文通过基于El-Gamal的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。</p>
-<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png" alt="enc-dec.png"></p>
+        <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p> 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。</p>
+<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。<br>在介绍Multi-User的方案之前需要先介绍data和keyword各自的加密方案，具体实现如下：</p>
+<h3 id="（一）data加密方案PE-Encryption"><a href="#（一）data加密方案PE-Encryption" class="headerlink" title="（一）data加密方案PE-Encryption"></a>（一）data加密方案PE-Encryption</h3><ul>
+<li>首先由可信密钥服务器生成密钥（G,g,q,X），其中（G,g,q）作为公共参数广播，而X作为全局唯一的主密钥由密钥服务器保存。</li>
+<li>对于user i，密钥服务器选取素数X(i,1)，并得到X(i,2) = X-X(i,1);将X(i,1)发送给user i，将(i，X(i，2))发送给服务器。</li>
+<li>当用户需要加密数据m时，选取素数r，根据密钥X(i,1)对m进行半加密，生成密文c’并上传给服务器。</li>
+<li>服务器根据用户id，找到对应的X(i,2)，对密文c’再进行加密得到最终的密文c，存储在服务器中。</li>
+<li>当user j想要获取该文件时，服务器先根据用户id找到X(j,2)进行半解密，得到密文c’，并发送给user j。</li>
+<li>user j得到密文c’后，根据私钥X(j,1)解密得到最终的数据m。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png" alt="enc-dec.png"></li>
+</ul>
+<h3 id="（二）keyword加密方案KE-Encryption"><a href="#（二）keyword加密方案KE-Encryption" class="headerlink" title="（二）keyword加密方案KE-Encryption"></a>（二）keyword加密方案KE-Encryption</h3><p>与data加密方案类似，在keyword加密方案中，需要可信密钥服务器将（G,g,q,h,H,f）进行广播，其中h=g^x，H为哈希函数，f为伪随机函数。该方案中，将keyword经过伪随机函数计算之后的值记作σ，将r+σ作为El-Gamal方案的参数进行计算，并将半加密结果上传给服务器，服务器根据密文进行进一步加密后生成pair[h^(r+σ),H(h^r)]存储在服务器中。</p>
+<h3 id="（三）Multi-User可搜索加密方案SE-Encryption"><a href="#（三）Multi-User可搜索加密方案SE-Encryption" class="headerlink" title="（三）Multi-User可搜索加密方案SE-Encryption"></a>（三）Multi-User可搜索加密方案SE-Encryption</h3><ul>
+<li>可信密钥服务器将（G,g,q,h,H,f）进行广播，并将X作为主密钥保留。</li>
+<li>用户新增时，可信密钥服务器选取用户密钥Kui，并计算得到服务器密钥Ksi，分别发送给用户和服务器。</li>
+</ul>
 <p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png" alt="multi1.png"></p>
 <p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png" alt="multi2.png"></p>
 <h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
 <li>一旦发生用户和服务器共谋，整个服务器上的资料将全部泄露。</li>
 </ul>
-<h2 id="五、可改进点（改进方法、启发）"><a href="#五、可改进点（改进方法、启发）" class="headerlink" title="五、可改进点（改进方法、启发）"></a>五、可改进点（改进方法、启发）</h2><h2 id="六、链接"><a href="#六、链接" class="headerlink" title="六、链接"></a>六、链接</h2>
+<h2 id="五、可改进点（改进方法、启发）"><a href="#五、可改进点（改进方法、启发）" class="headerlink" title="五、可改进点（改进方法、启发）"></a>五、可改进点（改进方法、启发）</h2><h2 id="六、链接"><a href="#六、链接" class="headerlink" title="六、链接"></a>六、链接</h2><p>[1]【El Gamal】<a href="https://en.wikipedia.org/wiki/ElGamal_encryption" target="_blank" rel="external">https://en.wikipedia.org/wiki/ElGamal_encryption</a></p>
+
       
     </div>
     
@@ -509,7 +511,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、摘要"><span class="nav-number">1.</span> <span class="nav-text">一、摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要工作-（核心场景、框架或者算法）"><span class="nav-number">2.</span> <span class="nav-text">二、主要工作 （核心场景、框架或者算法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、优点（动机、算法、写作）"><span class="nav-number">3.</span> <span class="nav-text">三、优点（动机、算法、写作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><span class="nav-number">4.</span> <span class="nav-text">四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、可改进点（改进方法、启发）"><span class="nav-number">5.</span> <span class="nav-text">五、可改进点（改进方法、启发）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、链接"><span class="nav-number">6.</span> <span class="nav-text">六、链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、摘要"><span class="nav-number">1.</span> <span class="nav-text">一、摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要工作-（核心场景、框架或者算法）"><span class="nav-number">2.</span> <span class="nav-text">二、主要工作 （核心场景、框架或者算法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）data加密方案PE-Encryption"><span class="nav-number">2.1.</span> <span class="nav-text">（一）data加密方案PE-Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（二）keyword加密方案KE-Encryption"><span class="nav-number">2.2.</span> <span class="nav-text">（二）keyword加密方案KE-Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（三）Multi-User可搜索加密方案SE-Encryption"><span class="nav-number">2.3.</span> <span class="nav-text">（三）Multi-User可搜索加密方案SE-Encryption</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、优点（动机、算法、写作）"><span class="nav-number">3.</span> <span class="nav-text">三、优点（动机、算法、写作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><span class="nav-number">4.</span> <span class="nav-text">四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、可改进点（改进方法、启发）"><span class="nav-number">5.</span> <span class="nav-text">五、可改进点（改进方法、启发）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、链接"><span class="nav-number">6.</span> <span class="nav-text">六、链接</span></a></li></ol></div>
             
           </div>
         </section>
