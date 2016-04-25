@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png">
-<meta property="og:updated_time" content="2016-04-25T14:47:46.011Z">
+<meta property="og:updated_time" content="2016-04-25T15:03:48.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
 <meta name="twitter:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
@@ -325,10 +325,15 @@
 <li>当user j想要获取该文件时，服务器先根据用户id找到X(j,2)进行半解密，得到密文c’，并发送给user j。</li>
 <li>user j得到密文c’后，根据私钥X(j,1)解密得到最终的数据m。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png" alt="enc-dec.png"></li>
 </ul>
-<h3 id="（二）keyword加密方案KE-Encryption"><a href="#（二）keyword加密方案KE-Encryption" class="headerlink" title="（二）keyword加密方案KE-Encryption"></a>（二）keyword加密方案KE-Encryption</h3><p>与data加密方案类似，在keyword加密方案中，需要可信密钥服务器将（G,g,q,h,H,f）进行广播，其中h=g^x，H为哈希函数，f为伪随机函数。该方案中，将keyword经过伪随机函数计算之后的值记作σ，将r+σ作为El-Gamal方案的参数进行计算，并将半加密结果上传给服务器，服务器根据密文进行进一步加密后生成pair[h^(r+σ),H(h^r)]存储在服务器中。</p>
+<h3 id="（二）keyword加密方案KE-Encryption"><a href="#（二）keyword加密方案KE-Encryption" class="headerlink" title="（二）keyword加密方案KE-Encryption"></a>（二）keyword加密方案KE-Encryption</h3><p>与data加密方案类似，在keyword加密方案中，需要可信密钥服务器将（G,g,q,h,H,f）进行广播，其中h=g^x，H为哈希函数，f为伪随机函数。该方案中，将keyword经过伪随机函数计算之后的值记作σ，将r+σ作为El-Gamal方案的参数进行计算，并将半加密结果上传给服务器，服务器根据密文进行进一步加密后生成pair（c1,c2）= [h^(r+σ),H(h^r)]=[h^r* g^xσ,H(h^r)]存储在服务器中。</p>
 <h3 id="（三）Multi-User可搜索加密方案SE-Encryption"><a href="#（三）Multi-User可搜索加密方案SE-Encryption" class="headerlink" title="（三）Multi-User可搜索加密方案SE-Encryption"></a>（三）Multi-User可搜索加密方案SE-Encryption</h3><ul>
 <li>可信密钥服务器将（G,g,q,h,H,f）进行广播，并将X作为主密钥保留。</li>
 <li>用户新增时，可信密钥服务器选取用户密钥Kui，并计算得到服务器密钥Ksi，分别发送给用户和服务器。</li>
+<li>用户上传文件时，根据data和keyword的加密方案进行加密。并上传给服务器进行二次加密和存储。</li>
+<li>用户i搜索时，根据用户i的密钥Kui以及随机素数r，生成trapdoor Ti(w)=(t1,t2)，上传给服务器。</li>
+<li>服务器根据用户i上传的trapdoor，以及用户i的密钥X(i,2)计算T=t1^X(i,2)<em> t2 = g^(xσ),计算完成后对存储的关键字集合(c1,c2) = [h^r</em> g^xσ,H(h^r)]进行配对搜索，若c2=H(c1/T)则配对成功，将该关键字对应的data半解密后发送给用户i。</li>
+<li>用户i得到半解密的数据后，再用密钥Kui进行完全解密。</li>
+<li>用户i的删除过程只需要服务器删除用户存储在服务器上的密钥X(i,2)即可。</li>
 </ul>
 <p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png" alt="multi1.png"></p>
 <p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png" alt="multi2.png"></p>
