@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737be18736.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png">
-<meta property="og:updated_time" content="2016-04-25T12:56:32.822Z">
+<meta property="og:updated_time" content="2016-04-25T13:25:36.142Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
 <meta name="twitter:description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
@@ -313,28 +313,19 @@
 
       
         <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p>将数据库存储在服务器上可以节省很多的维护成本，但是大多数的服务器都是不可信的，因此存储在其上的数据库需要进行加密。本文通过bilinear pairing实现了加密数据库的<strong>多用户上传和读取</strong>，适合数据库需要经常动态变化的情况。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。</p>
-<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>该加密方案主要涉及两个对称密钥e和k，其中密钥e用于加密和解密数据库记录，密钥k用于加密和解密index。密钥e通过可信密钥服务器直接分发给用户，每个用户的e都相同；而密钥k则与关键字一一对应，即不同的用户，只要关键字相同，就会得到相同的加密密钥k，而密钥k的计算需要通过bilinear pairing和BLS Short Signature实现，如下图所示。</p>
-<blockquote>
-<p>首先是用户新增的过程，该过程中，由offline的线下服务器完成密钥的计算，生成密钥对（xu，ComKu），其中私钥xu以及用户加密数据库记录的对称密钥e发送给用户，ComKu发送给服务器存储，s是哈希列表的种子。</p>
+<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>该加密方案主要涉及两个对称密钥e和k，其中密钥e用于加密和解密数据库记录，密钥k用于加密和解密index。密钥e通过可信密钥服务器直接分发给用户，每个用户的e都相同；而密钥k则与关键字一一对应，即不同的用户，只要关键字相同，就会得到相同的加密密钥k，而密钥k的计算需要通过bilinear pairing和BLS Short Signature实现，如下图所示。<br>（一）首先是用户新增的过程，该过程中，由offline的线下服务器完成密钥的计算，生成密钥对（xu，ComKu），其中私钥xu以及用户加密数据库记录的对称密钥e发送给用户，ComKu发送给服务器存储，s是哈希列表的种子。</p>
 <center><br><img src="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png" alt=""><br></center>
 
-</blockquote>
 <hr>
-<blockquote>
-<p>用户上传数据的过程，主要为双线性映射的过程。首先用户通过哈希列表以及随机数rw计算g1=hs(w)^rw∈G1发送给服务器（rw保证了安全性），服务器根据公钥ComKu返回映射到G2空间的值，用户再根据私钥解密得到生成Index的对称密钥K，使用k加密Index=<r,[r]k>，使用e加密record，上传给服务器。</r,[r]k></p>
+<p>（二）用户上传数据的过程，主要为双线性映射的过程。首先用户通过哈希列表以及随机数rw计算g1=hs(w)^rw∈G1发送给服务器（rw保证了安全性），服务器根据公钥ComKu返回映射到G2空间的值，用户再根据私钥解密得到生成Index的对称密钥K，使用k加密Index=<r,[r]k>，使用e加密record，上传给服务器。</r,[r]k></p>
 <center><br><img src="https://ooo.0o0.ooo/2016/04/20/571737be18736.png" alt=""><br></center>
 
-</blockquote>
 <hr>
-<blockquote>
-<p>用户查询及下载数据的过程。首先用户根据私钥xu生成查询，上传给服务器，服务器根据该用户的公钥ComKu以及哈希映射计算用于加密该关键字的对称密钥k’，并且对Index列表中的每一个条目<r,[r]k>进行匹配，若r=[[r]k]k’,表示匹配成功，则该index对应的记录加入到返回给用户的队列中。</r,[r]k></p>
+<p>（三）用户查询及下载数据的过程。首先用户根据私钥xu生成查询，上传给服务器，服务器根据该用户的公钥ComKu以及哈希映射计算用于加密该关键字的对称密钥k’，并且对Index列表中的每一个条目<r,[r]k>进行匹配，若r=[[r]k]k’,表示匹配成功，则该index对应的记录加入到返回给用户的队列中。</r,[r]k></p>
 <center><br><img src="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png" alt=""><br></center>
 
-</blockquote>
 <hr>
-<blockquote>
-<p>用户的撤销过程。只需要可信密钥服务器通知server删除相应的公钥comku，则该用户就无法进行读写。</p>
-</blockquote>
+<p>（四）用户的撤销过程。只需要可信密钥服务器通知server删除相应的公钥comku，则该用户就无法进行读写。</p>
 <h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><ul>
 <li>实现了多用户的上传和下载，适用于数据库经常需要修改的情况</li>
 <li>支持多关键字（作者提了一句说实现方法很简单，但并没有说明细节）</li>
