@@ -82,16 +82,19 @@
 
 
 
-<meta name="description" content="eat well">
+<meta name="description" content="一、摘要该文章主要介绍加密数据的搜索问题，作者首先对相关工作进行了详细的分析，比较了优缺点，并且对这些工作进行了分类和总结。同时作者提出了一个基于index的搜索方法，并对该方法的安全性进行了分析。另外，作者还在其基础上，提出了多用户的搜索问题。实验证明，作者提出的新方法不仅更加安全，而且更加的高效。
+二、主要工作 （核心场景、框架或者算法，主要关注多用户搜索）如下图所示，该方法主要利用了三个密钥">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Searchable Symmetric Encryption:Improved Definitions and Efficient Constructions,CCS,2006">
 <meta property="og:url" content="http://www.qxqtxzj.cn/2016/04/26/SSE06/index.html">
 <meta property="og:site_name" content="Echo's blog">
-<meta property="og:description" content="eat well">
-<meta property="og:updated_time" content="2016-04-26T07:22:35.018Z">
+<meta property="og:description" content="一、摘要该文章主要介绍加密数据的搜索问题，作者首先对相关工作进行了详细的分析，比较了优缺点，并且对这些工作进行了分类和总结。同时作者提出了一个基于index的搜索方法，并对该方法的安全性进行了分析。另外，作者还在其基础上，提出了多用户的搜索问题。实验证明，作者提出的新方法不仅更加安全，而且更加的高效。
+二、主要工作 （核心场景、框架或者算法，主要关注多用户搜索）如下图所示，该方法主要利用了三个密钥">
+<meta property="og:updated_time" content="2016-04-26T07:25:01.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Searchable Symmetric Encryption:Improved Definitions and Efficient Constructions,CCS,2006">
-<meta name="twitter:description" content="eat well">
+<meta name="twitter:description" content="一、摘要该文章主要介绍加密数据的搜索问题，作者首先对相关工作进行了详细的分析，比较了优缺点，并且对这些工作进行了分类和总结。同时作者提出了一个基于index的搜索方法，并对该方法的安全性进行了分析。另外，作者还在其基础上，提出了多用户的搜索问题。实验证明，作者提出的新方法不仅更加安全，而且更加的高效。
+二、主要工作 （核心场景、框架或者算法，主要关注多用户搜索）如下图所示，该方法主要利用了三个密钥">
 
 
 
@@ -308,7 +311,26 @@
       
 
       
-        
+        <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p>该文章主要介绍加密数据的搜索问题，作者首先对相关工作进行了详细的分析，比较了优缺点，并且对这些工作进行了分类和总结。同时作者提出了一个基于index的搜索方法，并对该方法的安全性进行了分析。另外，作者还在其基础上，提出了多用户的搜索问题。实验证明，作者提出的新方法不仅更加安全，而且更加的高效。</p>
+<h2 id="二、主要工作-（核心场景、框架或者算法，主要关注多用户搜索）"><a href="#二、主要工作-（核心场景、框架或者算法，主要关注多用户搜索）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法，主要关注多用户搜索）"></a>二、主要工作 （核心场景、框架或者算法，主要关注多用户搜索）</h2><p>如下图所示，该方法主要利用了三个密钥(mk,K,r)进行任务的隐私保护，其中主密钥mk主要用于广播加密算法中用户密钥的生成，K主要用于用户数据的加密，r为随机数。该方法引入了用户组的概念，每个文件拥有者相当于一个broadcast center，承担了计算和密钥分发的任务，减少服务器的计算开销。<br>该方法对同一用户产生的同一关键字的搜索可以生成不同的trapdoor，隐藏了用户的search pattern，但该方法无法防止access pattern的暴露。</p>
+<h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><ul>
+<li>相关工作的调研很到位，并且进行了分类和详细的比较</li>
+<li>数学基础扎实，对算法的安全分析很到位</li>
+<li>提出了一个分布式的多用户搜索方案</li>
+<li>用户的新增和撤销对于组内其他用户是透明的</li>
+</ul>
+<h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
+<li>non-adaptive方案的性能虽然很好，但是暴露了用户的search pattern;而adaptive方案虽然实现了对其的保护，但是带来了性能上的牺牲。</li>
+<li>多用户的搜索方案较薄弱。缺少多关键字搜索的方法以及用户组的细分方案。</li>
+</ul>
+<h2 id="五、可改进点（改进方法、启发）"><a href="#五、可改进点（改进方法、启发）" class="headerlink" title="五、可改进点（改进方法、启发）"></a>五、可改进点（改进方法、启发）</h2><ul>
+<li>增加多关键字搜索</li>
+<li>用户组细分，即同一个用户属于多个用户组的情况。</li>
+<li>用户权限细分，即细分组内用户的搜索权限、解密文件权限。<h2 id="六、链接"><a href="#六、链接" class="headerlink" title="六、链接"></a>六、链接</h2></li>
+<li>【pdf】<a href="https://eprint.iacr.org/2006/210.pdf" target="_blank" rel="external">https://eprint.iacr.org/2006/210.pdf</a></li>
+<li>【pdf】<a href="http://research.microsoft.com/pubs/102088/sse.pdf" target="_blank" rel="external">http://research.microsoft.com/pubs/102088/sse.pdf</a></li>
+</ul>
+
       
     </div>
     
@@ -481,7 +503,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、摘要"><span class="nav-number">1.</span> <span class="nav-text">一、摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要工作-（核心场景、框架或者算法，主要关注多用户搜索）"><span class="nav-number">2.</span> <span class="nav-text">二、主要工作 （核心场景、框架或者算法，主要关注多用户搜索）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、优点（动机、算法、写作）"><span class="nav-number">3.</span> <span class="nav-text">三、优点（动机、算法、写作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><span class="nav-number">4.</span> <span class="nav-text">四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、可改进点（改进方法、启发）"><span class="nav-number">5.</span> <span class="nav-text">五、可改进点（改进方法、启发）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、链接"><span class="nav-number">6.</span> <span class="nav-text">六、链接</span></a></li></ol></div>
             
           </div>
         </section>
