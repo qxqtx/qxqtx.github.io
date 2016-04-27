@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png">
-<meta property="og:updated_time" content="2016-04-27T03:04:28.023Z">
+<meta property="og:updated_time" content="2016-04-27T03:06:51.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
 <meta name="twitter:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
@@ -319,7 +319,7 @@
 <h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍data和keyword各自的加密方案，具体实现如下：</p>
 <h3 id="（一）data加密方案PE-Encryption"><a href="#（一）data加密方案PE-Encryption" class="headerlink" title="（一）data加密方案PE-Encryption"></a>（一）data加密方案PE-Encryption</h3><ul>
 <li>首先由可信密钥服务器生成密钥 $(G,g,q,x)$，其中 $(G,g,q)$ 作为公共参数广播，而 $x$ 作为全局唯一的主密钥由密钥服务器保存。</li>
-<li>对于用户 $i$ ，密钥服务器选取素数$x<em>{i1}$ ，并得到 $x</em>{i2}= x-x<em>{i1}$ ；将 $x</em>{i1}$ 发送给用户 $i$ ，将 $(i，x_{i2})$ 发送给服务器。</li>
+<li>对于用户 $i$ ，密钥服务器选取素数 (x<em>{i1}) ，并得到 (x</em>{i2}= x-x<em>{i1}) ；将 $x</em>{i1}$ 发送给用户 $i$ ，将 $(i，x_{i2})$ 发送给服务器。</li>
 <li>用户加密数据 $m$ 时，选取素数 $r$ ，根据密钥 $x<em>{i1}$ 对 $m$ 进行半加密，生成密文 $c^{’}</em>{i(m)}=(g^r,g^{rx_{i1}}m)$ 并上传给服务器。</li>
 <li>服务器根据用户id，找到对应的 $x_{i2}$，对密文 $c’$ 再进行加密得到最终的密文 $c$ ，存储在服务器中。</li>
 <li>当用户 $j$ 想要获取该文件时，服务器先根据用户id找到 $x_{j2}$ 进行半解密，得到密文 $c’$ ，并发送给用户 $j$ 。</li>
