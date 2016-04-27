@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png">
-<meta property="og:updated_time" content="2016-04-27T00:30:07.037Z">
+<meta property="og:updated_time" content="2016-04-27T02:48:41.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
 <meta name="twitter:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
@@ -319,24 +319,24 @@
 <h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍data和keyword各自的加密方案，具体实现如下：</p>
 <h3 id="（一）data加密方案PE-Encryption"><a href="#（一）data加密方案PE-Encryption" class="headerlink" title="（一）data加密方案PE-Encryption"></a>（一）data加密方案PE-Encryption</h3><ul>
 <li>首先由可信密钥服务器生成密钥 $(G,g,q,x)$，其中 $(G,g,q)$ 作为公共参数广播，而 $x$ 作为全局唯一的主密钥由密钥服务器保存。</li>
-<li>对于用户i，密钥服务器选取素数 $x<em>{i1}$ ，并得到 $x</em>{i2}= x-x<em>{i1}$ ；将 $x</em>{i1}$ 发送给用户i，将 $(i，x_{i2})$ 发送给服务器。</li>
-<li>用户加密数据m时，选取素数r，根据密钥X(i,1)对m进行半加密，生成密文 $c^{’}<em>{i(m)}=(g^r,g^{rx</em>{i1}}m)$ 并上传给服务器。</li>
-<li>服务器根据用户id，找到对应的X(i,2)，对密文c’再进行加密得到最终的密文c，存储在服务器中。</li>
-<li>当user j想要获取该文件时，服务器先根据用户id找到X(j,2)进行半解密，得到密文c’，并发送给user j。</li>
-<li>user j得到密文c’后，根据私钥X(j,1)解密得到最终的数据m。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png" alt="enc-dec.png"></li>
+<li>对于用户 $i$ ，密钥服务器选取素数 $x<em>{i1}$ ，并得到 $x</em>{i2}= x-x<em>{i1}$ ；将 $x</em>{i1}$ 发送给用户 $i$ ，将 $(i，x_{i2})$ 发送给服务器。</li>
+<li>用户加密数据 $m$ 时，选取素数 $r$，根据密钥 $x<em>{i1}$ 对 $m$ 进行半加密，生成密文 $c^{’}</em>{i(m)}=(g^r,g^{rx_{i1}}m)$ 并上传给服务器。</li>
+<li>服务器根据用户id，找到对应的 $x_{i2}$，对密文 $c’$ 再进行加密得到最终的密文 $c$ ，存储在服务器中。</li>
+<li>当用户 $j$ 想要获取该文件时，服务器先根据用户id找到 $x_{j2}$ 进行半解密，得到密文 $c’$ ，并发送给用户 $j$ 。</li>
+<li>用户 $j$ 得到密文 $c’$ 后，根据私钥 $x_{j1}$ 解密得到最终的数据 $m$。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png" alt="enc-dec.png"></li>
 </ul>
-<h3 id="（二）keyword加密方案KE-Encryption"><a href="#（二）keyword加密方案KE-Encryption" class="headerlink" title="（二）keyword加密方案KE-Encryption"></a>（二）keyword加密方案KE-Encryption</h3><p>与data加密方案类似，在keyword加密方案中，需要可信密钥服务器将（G,g,q,h,H,f）进行广播，其中h=g^x，H为哈希函数，f为伪随机函数。该方案中，将keyword经过伪随机函数计算之后的值记作σ，将r+σ作为El-Gamal方案的参数进行计算，并将半加密结果上传给服务器，服务器根据密文进行进一步加密后生成pair（c1,c2）= [h^(r+σ),H(h^r)]=[h^r* g^xσ,H(h^r)]存储在服务器中。</p>
+<h3 id="（二）keyword加密方案KE-Encryption"><a href="#（二）keyword加密方案KE-Encryption" class="headerlink" title="（二）keyword加密方案KE-Encryption"></a>（二）keyword加密方案KE-Encryption</h3><p>与data加密方案类似，在keyword加密方案中，需要可信密钥服务器将 $(G,g,q,h,H,f)$ 进行广播，其中 $h=g^x$ ，$H$ 为哈希函数， $f$ 为伪随机函数。该方案中，将keyword经过伪随机函数计算之后的值记作 $σ$ ，将 $r+σ$ 作为El-Gamal方案的参数进行计算，并将半加密结果上传给服务器，服务器根据密文进行进一步加密后生成 $(c_1,c_2)= [h^{r+σ},H(h^r)]=[h^r g^{xσ_w},H(h^r)]$ 存储在服务器中。</p>
 <h3 id="（三）Multi-User可搜索加密方案SE-Encryption"><a href="#（三）Multi-User可搜索加密方案SE-Encryption" class="headerlink" title="（三）Multi-User可搜索加密方案SE-Encryption"></a>（三）Multi-User可搜索加密方案SE-Encryption</h3><ul>
-<li>可信密钥服务器将（G,g,q,h,H,f）进行广播，并将X作为主密钥保留。</li>
-<li>用户新增时，可信密钥服务器选取用户密钥Kui，并计算得到服务器密钥Ksi，分别发送给用户和服务器。</li>
+<li>可信密钥服务器将 $(G,g,q,h,H,f)$ 进行广播，并将 $x$ 作为主密钥保留。</li>
+<li>用户新增时，可信密钥服务器选取用户密钥 $K_{u<em>i}$，并计算得到服务器密钥 $K</em>{s_i}$，分别发送给用户和服务器。</li>
 <li>用户上传文件时，根据data和keyword的加密方案进行加密。并上传给服务器进行二次加密和存储。</li>
 </ul>
 <p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png" alt="multi1.png"></p>
 <ul>
-<li>用户i搜索时，根据用户i的密钥Kui以及随机素数r，生成trapdoor Ti(w)=(t1,t2)，上传给服务器。</li>
-<li>服务器根据用户i上传的trapdoor，以及用户i的密钥X(i,2)计算T=t1^X(i,2)<em> t2 = g^(xσ),计算完成后对存储的关键字集合(c1,c2) = [h^r</em> g^xσ,H(h^r)]进行配对搜索，若c2=H(c1/T)则配对成功，将该关键字对应的data半解密后发送给用户i。</li>
-<li>用户i得到半解密的数据后，再用密钥Kui进行完全解密。</li>
-<li>用户i的删除过程只需要服务器删除用户存储在服务器上的密钥X(i,2)即可。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png" alt="multi2.png"></li>
+<li>用户i搜索时，根据用户i的密钥Kui以及随机素数r，生成trapdoor  $T_i(w)=(t1,t2)$ ，上传给服务器。</li>
+<li>服务器根据用户 $i$ 上传的trapdoor，以及用户 $i$ 的密钥 $x<em>{i2}$ 计算 $T=t1^{x</em>{i2}} t2 = g^{xσ_w}$ ,计算完成后对存储的关键字集合 $(c_1,c_2) = [h^r g^{xσ_w},H(h^r)]$ 进行配对搜索，若 $c_2=H(c_1 T^{-1})$ 则配对成功，将该关键字对应的data半解密后发送给用户 $i$。</li>
+<li>用户 $i$ 得到半解密的数据后，再用密钥 $K_{u_i}$ 进行完全解密。</li>
+<li>用户 $i$ 的删除过程只需要服务器删除用户存储在服务器上的密钥 $x_{i2}$ 即可。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png" alt="multi2.png"></li>
 </ul>
 <h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><ul>
 <li>不需要用户共享任何密钥</li>
@@ -344,7 +344,7 @@
 </ul>
 <h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
 <li>一旦发生用户和服务器共谋，整个服务器上的资料将全部泄露。</li>
-<li>搜索效率低，O(m)，m为整个数据集</li>
+<li>搜索效率低，$O(m)$，$m$为整个数据集</li>
 <li>无法隐藏search pattern</li>
 </ul>
 <h2 id="五、链接"><a href="#五、链接" class="headerlink" title="五、链接"></a>五、链接</h2><p>[1]【El Gamal】<a href="https://en.wikipedia.org/wiki/ElGamal_encryption" target="_blank" rel="external">https://en.wikipedia.org/wiki/ElGamal_encryption</a></p>
