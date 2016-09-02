@@ -82,16 +82,22 @@
 
 
 
-<meta name="description" content="AbstractImplementation(senario,framwork,algorithm)Strong Point(motivation,algorithm,writing)WeaknessMy point of view">
+<meta name="description" content="AbstractThis paper mainly discuss the application of blockchain in secure data storage.The data is stored off-chain in a distributed way, and the blockchain serves asan access control list. In the cas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Decentralizing Privacy：Using Blockchain to Protect Personal Data,USENIX security workshop,2015">
 <meta property="og:url" content="http://www.qxqtxzj.cn/2016/09/02/Decentralizing Privacy：Using Blockchain to Protect Personal Data/index.html">
 <meta property="og:site_name" content="Echo's blog">
-<meta property="og:description" content="AbstractImplementation(senario,framwork,algorithm)Strong Point(motivation,algorithm,writing)WeaknessMy point of view">
-<meta property="og:updated_time" content="2016-09-02T03:49:00.921Z">
+<meta property="og:description" content="AbstractThis paper mainly discuss the application of blockchain in secure data storage.The data is stored off-chain in a distributed way, and the blockchain serves asan access control list. In the cas">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/09/02/57c968f5daf47.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/09/02/57c975cedd38b.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/09/02/57c9756546bd0.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/09/02/57c97545e43fe.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/09/02/57c97576464e4.png">
+<meta property="og:updated_time" content="2016-09-02T13:41:45.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Decentralizing Privacy：Using Blockchain to Protect Personal Data,USENIX security workshop,2015">
-<meta name="twitter:description" content="AbstractImplementation(senario,framwork,algorithm)Strong Point(motivation,algorithm,writing)WeaknessMy point of view">
+<meta name="twitter:description" content="AbstractThis paper mainly discuss the application of blockchain in secure data storage.The data is stored off-chain in a distributed way, and the blockchain serves asan access control list. In the cas">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2016/09/02/57c968f5daf47.png">
 
 
 
@@ -308,7 +314,34 @@
       
 
       
-        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><h2 id="Implementation-senario-framwork-algorithm"><a href="#Implementation-senario-framwork-algorithm" class="headerlink" title="Implementation(senario,framwork,algorithm)"></a>Implementation(senario,framwork,algorithm)</h2><h2 id="Strong-Point-motivation-algorithm-writing"><a href="#Strong-Point-motivation-algorithm-writing" class="headerlink" title="Strong Point(motivation,algorithm,writing)"></a>Strong Point(motivation,algorithm,writing)</h2><h2 id="Weakness"><a href="#Weakness" class="headerlink" title="Weakness"></a>Weakness</h2><h2 id="My-point-of-view"><a href="#My-point-of-view" class="headerlink" title="My point of view"></a>My point of view</h2>
+        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>This paper mainly discuss the application of blockchain in secure data storage.<br>The data is stored off-chain in a distributed way, and the blockchain serves as<br>an access control list. In the case when a mobile phone application want to<br>read/write the user’s personal data, the verification program must be made and<br>recorded through the blockchain. In this way, a data owner can surely own and<br>control their personal data.</p>
+<hr>
+<h2 id="Implementation-senario-framework-algorithm"><a href="#Implementation-senario-framework-algorithm" class="headerlink" title="Implementation(senario,framework,algorithm)"></a>Implementation(senario,framework,algorithm)</h2><h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p>The proposed system focus specifically on mobile paltforms, and consists of three entities, the user, the third-party services and the blockchain, which can ben seen in Fig.1. The user can commit a transaction called T_access which is used to dynamiclly change the access control list and the service can commit the T_data transaction to store or read the user’s data.</p>
+<p>The Distributed Hash Table(DHT) shows in Fig.1. is the structure for storing data with added an interface to the blockchain. <strong>This paper also emphasized the DHT scheme can be replaced by other off-chain solutions, for example, the centralized cloud.</strong><br><img src="https://ooo.0o0.ooo/2016/09/02/57c968f5daf47.png" alt="2016-09-02_195551.png"></p>
+<h3 id="Algorithms-and-protocols"><a href="#Algorithms-and-protocols" class="headerlink" title="Algorithms and protocols"></a>Algorithms and protocols</h3><p>The concrete protocol include four parts.</p>
+<ol>
+<li>How does the user and the service share some neccessary keys to perform the ACL permission check.</li>
+<li>How does the user commit and store the ACL in the blockchain.</li>
+<li>How does the blockchain executes the ACL permission check when a service want to access the user’s data.</li>
+<li>How does the service store and load data after succeed in permission check.  </li>
+</ol>
+<p>Corresponding to these four problems, there are four different protocols. We introduce the four protocols in a high level.</p>
+<p>Protocol 1(Generating a compound identity)<br>The user and a service generate the a <pub,pri> key pairs and send it in a secure channel.<br><img src="https://ooo.0o0.ooo/2016/09/02/57c975cedd38b.png" alt="2016-09-02_205105.png"></pub,pri></p>
+<p>In Protocol 3(Access Control Protocol)<br>This Protocol is executed when a user commit a T_access transaction, the blockchain first parse the transaction m(Step 3), after a identity authentication(Step 4), the commited POLICY will be stored in the ledger(Step 5).<br><img src="https://ooo.0o0.ooo/2016/09/02/57c9756546bd0.png" alt="2016-09-02_204619.png"></p>
+<p>In Protocol 2(Permission check against the blockchain) When a service want to access the user’s data, it must first be check by the ACL. The blockchain first retrieve the corresponding policy(Step 3), if the request is made by the user himself(Step 6) or by the service and the service is really given the permission(Step 7), then the ACL permission check succeed, otherwise failed.<br><img src="https://ooo.0o0.ooo/2016/09/02/57c97545e43fe.png" alt="2016-09-02_204607.png"><br>In Protocol 4(Storing or Loading Data)<br>This Protocol is executed when a service commit a T_data transaction, it first use Protocol 2 to check the permissions(Step3), then using the blockchain to find the address of the data(Step 5), and finally store(Step 9) or loading(Step 12) the data. This paper also explained how to use the Bitcoin blockchain to store and load the data.<br>The bitcoin transation include a variable number of output address, we can use the first two output as the memory address and the other outputs as a serialized document.</p>
+<p><img src="https://ooo.0o0.ooo/2016/09/02/57c97576464e4.png" alt="2016-09-02_204629.png"></p>
+<hr>
+<h2 id="Strong-Point-motivation-algorithm-writing"><a href="#Strong-Point-motivation-algorithm-writing" class="headerlink" title="Strong Point(motivation,algorithm,writing)"></a>Strong Point(motivation,algorithm,writing)</h2><ul>
+<li>This paper introduces the first fine-grained access control mechanism using the blockchain and then the user can totally control their personal data.(motivation perspective)</li>
+<li>This paper writes clearly on how to combine the blockchain with the off-chain storage(a centralized cloud or the DHT).(writing perspective)</li>
+</ul>
+<hr>
+<h2 id="Weakness"><a href="#Weakness" class="headerlink" title="Weakness"></a>Weakness</h2><ul>
+<li>This papaer do not have an experiment, so it is hard to say the performance when the service store or loading the data, and the ACL permission check also has an delay.</li>
+</ul>
+<hr>
+<h2 id="My-point-of-view"><a href="#My-point-of-view" class="headerlink" title="My point of view"></a>My point of view</h2><p>This paper’ point of view has been implemented by Enigma and Storj, where Enigma is used for MPC and Stroj is used for distributed storage. The idea of the access control and the reform of the bitcoin transaction output can be surely introduced in verifiable SSE.</p>
+
       
     </div>
     
@@ -477,7 +510,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-senario-framwork-algorithm"><span class="nav-number">2.</span> <span class="nav-text">Implementation(senario,framwork,algorithm)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Strong-Point-motivation-algorithm-writing"><span class="nav-number">3.</span> <span class="nav-text">Strong Point(motivation,algorithm,writing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weakness"><span class="nav-number">4.</span> <span class="nav-text">Weakness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#My-point-of-view"><span class="nav-number">5.</span> <span class="nav-text">My point of view</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-senario-framework-algorithm"><span class="nav-number">2.</span> <span class="nav-text">Implementation(senario,framework,algorithm)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Framework"><span class="nav-number">2.1.</span> <span class="nav-text">Framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Algorithms-and-protocols"><span class="nav-number">2.2.</span> <span class="nav-text">Algorithms and protocols</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Strong-Point-motivation-algorithm-writing"><span class="nav-number">3.</span> <span class="nav-text">Strong Point(motivation,algorithm,writing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weakness"><span class="nav-number">4.</span> <span class="nav-text">Weakness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#My-point-of-view"><span class="nav-number">5.</span> <span class="nav-text">My point of view</span></a></li></ol></div>
             
           </div>
         </section>
