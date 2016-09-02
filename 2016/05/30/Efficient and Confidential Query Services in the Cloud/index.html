@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SSE,database,privacy-preserving,proxy encryption,El Gamal-based," />
+  <meta name="keywords" content="SSE," />
 
 
 
@@ -82,23 +82,18 @@
 
 
 
-<meta name="description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
-二、主要工作 （核心场景、框架或者算法）本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍d">
+<meta name="description" content="1.    主要解决的问题该文章提出了一个RAndom Space Perturbation(RASP)的方法，来解决Cloud中数据库的安全搜索问题。RASP方法主要就是对数据库数据进行保护，该方法其实是Order Preserving Encryption(OPE)，维度扩展，噪声注入，随机防护等方法的结合。他的前提是攻击者只知道perturb data以及data distribution。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
-<meta property="og:url" content="http://www.qxqtxzj.cn/2016/04/25/El Gamal-based Proxy Encryption Scheme/index.html">
+<meta property="og:title" content="Efficient and Confidential Query Services in the Cloud">
+<meta property="og:url" content="http://www.qxqtxzj.cn/2016/05/30/Efficient and Confidential Query Services in the Cloud/index.html">
 <meta property="og:site_name" content="Echo's blog">
-<meta property="og:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
-二、主要工作 （核心场景、框架或者算法）本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍d">
-<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
-<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png">
-<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png">
-<meta property="og:updated_time" content="2016-04-27T03:24:26.884Z">
+<meta property="og:description" content="1.    主要解决的问题该文章提出了一个RAndom Space Perturbation(RASP)的方法，来解决Cloud中数据库的安全搜索问题。RASP方法主要就是对数据库数据进行保护，该方法其实是Order Preserving Encryption(OPE)，维度扩展，噪声注入，随机防护等方法的结合。他的前提是攻击者只知道perturb data以及data distribution。">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/10/570b0855da108.png">
+<meta property="og:updated_time" content="2016-04-22T01:15:35.646Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
-<meta name="twitter:description" content="一、摘要 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。
-二、主要工作 （核心场景、框架或者算法）本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍d">
-<meta name="twitter:image" content="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png">
+<meta name="twitter:title" content="Efficient and Confidential Query Services in the Cloud">
+<meta name="twitter:description" content="1.    主要解决的问题该文章提出了一个RAndom Space Perturbation(RASP)的方法，来解决Cloud中数据库的安全搜索问题。RASP方法主要就是对数据库数据进行保护，该方法其实是Order Preserving Encryption(OPE)，维度扩展，噪声注入，随机防护等方法的结合。他的前提是攻击者只知道perturb data以及data distribution。">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2016/04/10/570b0855da108.png">
 
 
 
@@ -116,7 +111,7 @@
   };
 </script>
 
-  <title> Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011 | Echo's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Efficient and Confidential Query Services in the Cloud | Echo's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +251,7 @@
             
             
               
-                Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011
+                Efficient and Confidential Query Services in the Cloud
               
             
           </h1>
@@ -268,8 +263,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-25T19:43:56+08:00" content="2016-04-25">
-              2016-04-25
+            <time itemprop="dateCreated" datetime="2016-05-30T17:21:50+08:00" content="2016-05-30">
+              2016-05-30
             </time>
           </span>
 
@@ -315,39 +310,11 @@
       
 
       
-        <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p> 本文通过基于El-Gamal[1]的代理加密算法（proxy encryption algorithm）实现了多用户对加密数据库的上传和下载。该方案不需要用户共享密钥，可以实现用户注册和删除的透明性。</p>
-<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>本文首先提出了两个场景，第一个是企业用户保护商业数据的场景，第二个是个人用户保护个人医疗隐私的场景。在介绍Multi-User的方案之前需要先介绍data和keyword各自的加密方案，具体实现如下：</p>
-<h3 id="（一）data加密方案PE-Encryption"><a href="#（一）data加密方案PE-Encryption" class="headerlink" title="（一）data加密方案PE-Encryption"></a>（一）data加密方案PE-Encryption</h3><ul>
-<li>首先由可信密钥服务器生成密钥 $(G,g,q,x)$，其中 $(G,g,q)$ 作为公共参数广播，而 $x$ 作为全局唯一的主密钥由密钥服务器保存。</li>
-<li>对于用户 $i$ ，密钥服务器选取素数 $x<em>{i1}$ ，并得到 $x</em>{i2}= x-x<em>{i1}$ ；将 $x</em>{i1}$ 发送给用户 $i$ ，将 $(i，x_{i2})$ 发送给服务器。</li>
-<li>用户加密数据 $m$ 时，选取素数 $r$ ，根据密钥 $x<em>{i1}$ 对 $m$ 进行半加密，生成密文 $c^{’}</em>{i(m)}=(g^r,g^{rx_{i1}}m)$ 并上传给服务器。</li>
-<li>服务器根据用户id，找到对应的 $x_{i2}$，对密文 $c’$ 再进行加密得到最终的密文 $c$ ，存储在服务器中。</li>
-<li>当用户 $j$ 想要获取该文件时，服务器先根据用户id找到 $x_{j2}$ 进行半解密，得到密文 $c’$ ，并发送给用户 $j$ 。</li>
-<li>用户 $j$ 得到密文 $c’$ 后，根据私钥 $x_{j1}$ 解密得到最终的数据 $m$。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e5b0d4e.png" alt="enc-dec.png"></li>
-</ul>
-<h3 id="（二）keyword加密方案KE-Encryption"><a href="#（二）keyword加密方案KE-Encryption" class="headerlink" title="（二）keyword加密方案KE-Encryption"></a>（二）keyword加密方案KE-Encryption</h3><p>与data加密方案类似，在keyword加密方案中，需要可信密钥服务器将 $(G,g,q,h,H,f)$ 进行广播，其中 $h=g^x$ ，$H$ 为哈希函数， $f$ 为伪随机函数。该方案中，将keyword经过伪随机函数计算之后的值记作 $σ$ ，将 $r+σ$ 作为El-Gamal方案的参数进行计算，并将半加密结果上传给服务器，服务器根据密文进行进一步加密后生成 $(c_1,c_2)= [h^{r+σ},H(h^r)]=[h^r g^{xσ_w},H(h^r)]$ 存储在服务器中。</p>
-<h3 id="（三）Multi-User可搜索加密方案SE-Encryption"><a href="#（三）Multi-User可搜索加密方案SE-Encryption" class="headerlink" title="（三）Multi-User可搜索加密方案SE-Encryption"></a>（三）Multi-User可搜索加密方案SE-Encryption</h3><ul>
-<li>可信密钥服务器将 $(G,g,q,h,H,f)$ 进行广播，并将 $x$ 作为主密钥保留。</li>
-<li>用户新增时，可信密钥服务器选取用户密钥 $K_{u<em>i}$，并计算得到服务器密钥 $K</em>{s_i}$，分别发送给用户和服务器。</li>
-<li>用户上传文件时，根据data和keyword的加密方案进行加密。并上传给服务器进行二次加密和存储。</li>
-</ul>
-<p><img src="https://ooo.0o0.ooo/2016/04/25/571e11e550b8e.png" alt="multi1.png"></p>
-<ul>
-<li>用户i搜索时，根据用户i的密钥Kui以及随机素数r，生成trapdoor  $T_i(w)=(t1,t2)$ ，上传给服务器。</li>
-<li>服务器根据用户 $i$ 上传的trapdoor，以及用户 $i$ 的密钥 $x<em>{i2}$ 计算 $T=t1^{x</em>{i2}} t2 = g^{xσ_w}$ ,计算完成后对存储的关键字集合 $(c_1,c_2) = [h^r g^{xσ_w},H(h^r)]$ 进行配对搜索，若 $c_2=H(c_1 T^{-1})$ 则配对成功，将该关键字对应的data半解密后发送给用户 $i$。</li>
-<li>用户 $i$ 得到半解密的数据后，再用密钥 $K_{u_i}$ 进行完全解密。</li>
-<li>用户 $i$ 的删除过程只需要服务器删除用户存储在服务器上的密钥 $x_{i2}$ 即可。<br><img src="https://ooo.0o0.ooo/2016/04/25/571e11e599810.png" alt="multi2.png"></li>
-</ul>
-<h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><ul>
-<li>不需要用户共享任何密钥</li>
-<li>提到了数据的增删改查，以往的方案中基本只涉及到增加和查询。</li>
-</ul>
-<h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
-<li>一旦发生用户和服务器共谋，整个服务器上的资料将全部泄露。</li>
-<li>搜索效率低，$O(m)$，$m$为整个数据集</li>
-<li>无法隐藏search pattern</li>
-</ul>
-<h2 id="五、链接"><a href="#五、链接" class="headerlink" title="五、链接"></a>五、链接</h2><p>[1]【El Gamal】<a href="https://en.wikipedia.org/wiki/ElGamal_encryption" target="_blank" rel="external">https://en.wikipedia.org/wiki/ElGamal_encryption</a></p>
+        <h2 id="1-主要解决的问题"><a href="#1-主要解决的问题" class="headerlink" title="1.    主要解决的问题"></a>1.    主要解决的问题</h2><p>该文章提出了一个RAndom Space Perturbation(RASP)的方法，来解决Cloud中数据库的安全搜索问题。<br>RASP方法主要就是对数据库数据进行保护，该方法其实是Order Preserving Encryption(OPE)，维度扩展，噪声注入，随机防护等方法的结合。他的前提是攻击者只知道perturb data以及data distribution。</p>
+<h2 id="2-背景分析"><a href="#2-背景分析" class="headerlink" title="2.    背景分析"></a>2.    背景分析</h2><p>数据在云端进行存储、查找和计算非常方便，但是将数据移动到云端就涉及到了数据隐私的问题。一个直接的解决方法是在数据上传到云端之前将其加密，然而现有的基于密文的加密方法都有局限性，比如无法对文件进行搜索[1]。另外还有通过公钥密码系统来解决数据库的安全搜索问题，但需要的存储和计算量都比较大。<br>对数据库的查询，例如range queries和KNN queries如果有一个高效的索引结构的话，可以达到很短的处理时间。然而，目前还没有足够高效的索引结构来支持加密数据的搜索（感觉王聪老师的提出的索引结构可以达到这个要求）。</p>
+<h2 id="3-论文主要思想"><a href="#3-论文主要思想" class="headerlink" title="3.    论文主要思想"></a>3.    论文主要思想</h2><p>它的主要流程如下图所示，首先，它将数据从original space的enclosed range映射到perturb space的irregular shaped space（升维）当中，变换后的数据通过R-Tree结构完成多维高效索引。用户发起查询请求后，先根据R-Tree的索引找到大致位置，然后再根据具体的查询条件进行定位。<br><img src="https://ooo.0o0.ooo/2016/04/10/570b0855da108.png" alt=""></p>
+<h2 id="4-优缺点分析"><a href="#4-优缺点分析" class="headerlink" title="4.    优缺点分析"></a>4.    优缺点分析</h2><p>该论文主要针对数据库等列表数据的安全搜索，并且主要保障range query和KNN query两种类型的请求服务的安全。它可以保护search pattern，抵抗分布式攻击，可以保存range query的拓扑。</p>
+<h2 id="5-参考文献"><a href="#5-参考文献" class="headerlink" title="5.    参考文献"></a>5.    参考文献</h2><p>[1]. Curtmola, R., Garay, J., Kamara, S., and Ostrovsky, R. Searchable symmetric encryption:improved definitions and efficient constructions. In ACM CCS (2006), pp. 79–88.</p>
 
       
     </div>
@@ -370,14 +337,6 @@
           
             <a href="/tags/SSE/" rel="tag">#SSE</a>
           
-            <a href="/tags/database/" rel="tag">#database</a>
-          
-            <a href="/tags/privacy-preserving/" rel="tag">#privacy-preserving</a>
-          
-            <a href="/tags/proxy-encryption/" rel="tag">#proxy encryption</a>
-          
-            <a href="/tags/El-Gamal-based/" rel="tag">#El Gamal-based</a>
-          
         </div>
       
 
@@ -385,16 +344,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/21/MuPQ/" rel="next" title="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
-                <i class="fa fa-chevron-left"></i> Multi-User Private Queries over Encrypted Databases,IJACT,2009
+              <a href="/2016/04/26/Searchable Symmetric EncryptionImproved Definitions and Efficient Constructions,CCS,2006/" rel="next" title="Searchable Symmetric Encryption:Improved Definitions and Efficient Constructions,CCS,2006">
+                <i class="fa fa-chevron-left"></i> Searchable Symmetric Encryption:Improved Definitions and Efficient Constructions,CCS,2006
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/26/SSE06/" rel="prev" title="Searchable Symmetric Encryption:Improved Definitions and Efficient Constructions,CCS,2006">
-                Searchable Symmetric Encryption:Improved Definitions and Efficient Constructions,CCS,2006 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/30/Privacy-preserving Multi-keyword Text Search in the Cloud Supporting Similarity-based Ranking/" rel="prev" title="Privacy-preserving Multi-keyword Text Search in the Cloud Supporting Similarity-based Ranking">
+                Privacy-preserving Multi-keyword Text Search in the Cloud Supporting Similarity-based Ranking <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -463,7 +422,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -471,7 +430,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -480,7 +439,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -527,7 +486,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、摘要"><span class="nav-number">1.</span> <span class="nav-text">一、摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要工作-（核心场景、框架或者算法）"><span class="nav-number">2.</span> <span class="nav-text">二、主要工作 （核心场景、框架或者算法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）data加密方案PE-Encryption"><span class="nav-number">2.1.</span> <span class="nav-text">（一）data加密方案PE-Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（二）keyword加密方案KE-Encryption"><span class="nav-number">2.2.</span> <span class="nav-text">（二）keyword加密方案KE-Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（三）Multi-User可搜索加密方案SE-Encryption"><span class="nav-number">2.3.</span> <span class="nav-text">（三）Multi-User可搜索加密方案SE-Encryption</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、优点（动机、算法、写作）"><span class="nav-number">3.</span> <span class="nav-text">三、优点（动机、算法、写作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><span class="nav-number">4.</span> <span class="nav-text">四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、链接"><span class="nav-number">5.</span> <span class="nav-text">五、链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-主要解决的问题"><span class="nav-number">1.</span> <span class="nav-text">1.    主要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-背景分析"><span class="nav-number">2.</span> <span class="nav-text">2.    背景分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-论文主要思想"><span class="nav-number">3.</span> <span class="nav-text">3.    论文主要思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-优缺点分析"><span class="nav-number">4.</span> <span class="nav-text">4.    优缺点分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-参考文献"><span class="nav-number">5.</span> <span class="nav-text">5.    参考文献</span></a></li></ol></div>
             
           </div>
         </section>

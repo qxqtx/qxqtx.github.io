@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SSE,database,privacy-preserving,bilinear pairing,BLS signature," />
+  <meta name="keywords" content="SSE," />
 
 
 
@@ -82,20 +82,16 @@
 
 
 
-<meta name="description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
+<meta name="description" content="主要内容该文章重点提出了一个三方模型，如下图所示，其中crawler被认为是可信任的，而server是不可信任的。该方案中，crawler利用Merkle hash tree对web pages 构造了一个authenticated data structure，利用bilinear pairing方法为web pages生成一个signed digest。其中（1）authenticated d">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
-<meta property="og:url" content="http://www.qxqtxzj.cn/2016/04/21/MuPQ/index.html">
+<meta property="og:title" content="Efficient Verification of WebContent Searching Through Authenticated Web Crawlers">
+<meta property="og:url" content="http://www.qxqtxzj.cn/2016/05/30/Efficient Verification of WebContent Searching Through Authenticated Web Crawlers/index.html">
 <meta property="og:site_name" content="Echo's blog">
-<meta property="og:description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
-<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png">
-<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737be18736.png">
-<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png">
-<meta property="og:updated_time" content="2016-04-25T13:57:52.817Z">
+<meta property="og:description" content="主要内容该文章重点提出了一个三方模型，如下图所示，其中crawler被认为是可信任的，而server是不可信任的。该方案中，crawler利用Merkle hash tree对web pages 构造了一个authenticated data structure，利用bilinear pairing方法为web pages生成一个signed digest。其中（1）authenticated d">
+<meta property="og:updated_time" content="2016-04-22T01:12:50.669Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
-<meta name="twitter:description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
-<meta name="twitter:image" content="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png">
+<meta name="twitter:title" content="Efficient Verification of WebContent Searching Through Authenticated Web Crawlers">
+<meta name="twitter:description" content="主要内容该文章重点提出了一个三方模型，如下图所示，其中crawler被认为是可信任的，而server是不可信任的。该方案中，crawler利用Merkle hash tree对web pages 构造了一个authenticated data structure，利用bilinear pairing方法为web pages生成一个signed digest。其中（1）authenticated d">
 
 
 
@@ -113,7 +109,7 @@
   };
 </script>
 
-  <title> Multi-User Private Queries over Encrypted Databases,IJACT,2009 | Echo's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Efficient Verification of WebContent Searching Through Authenticated Web Crawlers | Echo's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +249,7 @@
             
             
               
-                Multi-User Private Queries over Encrypted Databases,IJACT,2009
+                Efficient Verification of WebContent Searching Through Authenticated Web Crawlers
               
             
           </h1>
@@ -265,8 +261,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-21T09:16:30+08:00" content="2016-04-21">
-              2016-04-21
+            <time itemprop="dateCreated" datetime="2016-05-30T17:21:50+08:00" content="2016-05-30">
+              2016-05-30
             </time>
           </span>
 
@@ -312,122 +308,8 @@
       
 
       
-        <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p>将数据库存储在服务器上可以节省很多的维护成本，但是大多数的服务器都是不可信的，因此存储在其上的数据库需要进行加密。本文通过bilinear pairing实现了加密数据库的<strong>多用户上传和读取</strong>，适合数据库需要经常动态变化的情况。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。</p>
-<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>该加密方案主要涉及两个对称密钥e和k，其中密钥e用于加密和解密数据库记录，密钥k用于加密和解密index。密钥e通过可信密钥服务器直接分发给用户，每个用户的e都相同；而密钥k则与关键字一一对应，即不同的用户，只要关键字相同，就会得到相同的加密密钥k，而密钥k的计算需要通过bilinear pairing和BLS Short Signature实现，如下图所示。</p>
-<hr>
-<p>（一）首先是用户新增的过程，该过程中，由offline的线下服务器完成密钥的计算，生成密钥对（xu，ComKu），其中私钥xu以及用户加密数据库记录的对称密钥e发送给用户，ComKu发送给服务器存储，s是哈希列表的种子。</p>
-<center><br><img src="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png" alt=""><br></center>
-
-<hr>
-<p>（二）用户上传数据的过程，主要为双线性映射的过程。首先用户通过哈希列表以及随机数rw计算g1=hs(w)^rw∈G1发送给服务器（rw保证了安全性），服务器根据公钥ComKu返回映射到G2空间的值，用户再根据私钥解密得到生成Index的对称密钥K，使用k加密Index=<r,[r]k>，使用e加密record，上传给服务器。</r,[r]k></p>
-<center><br><img src="https://ooo.0o0.ooo/2016/04/20/571737be18736.png" alt=""><br></center>
-
-<hr>
-<p>（三）用户查询及下载数据的过程。首先用户根据私钥xu生成查询，上传给服务器，服务器根据该用户的公钥ComKu以及哈希映射计算用于加密该关键字的对称密钥k’，并且对Index列表中的每一个条目<r,[r]k>进行匹配，若r=[[r]k]k’,表示匹配成功，则该index对应的记录加入到返回给用户的队列中。</r,[r]k></p>
-<center><br><img src="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png" alt=""><br></center>
-
-<hr>
-<p>（四）用户的撤销过程。只需要可信密钥服务器通知server删除相应的公钥comku，则该用户就无法进行读写。</p>
-<hr>
-<h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><ul>
-<li>实现了多用户的上传和下载，适用于数据库经常需要修改的情况</li>
-<li>支持多关键字（作者提了一句说实现方法很简单，但并没有说明细节）</li>
-<li>用户的新增和删除并不影响其他用户</li>
-</ul>
-<h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
-<li>搜索效率为O(m)，m为record的数目，不适合大型的数据库。</li>
-<li>优化方案中提到了性能的优化，但仅限于特定的可以进行binary search的数据库</li>
-<li>可信密钥服务器只维护了一个主密钥Kum以及对称密钥e，整个数据库只分为可访问与不可访问两类用户。在该场景中是合理的，但在我们的场景中，每一个用户的文件都相当于一个小型数据库，每一个用户甚至每一个文件都需要区分可访问与不可访问。</li>
-<li>没有区分搜索权限和下载权限</li>
-</ul>
-<h2 id="五、可改进点（改进方法、启发）"><a href="#五、可改进点（改进方法、启发）" class="headerlink" title="五、可改进点（改进方法、启发）"></a>五、可改进点（改进方法、启发）</h2><ul>
-<li>order preserving？（由下一篇论文得到启发 ）</li>
-</ul>
-<h2 id="六、对比"><a href="#六、对比" class="headerlink" title="六、对比"></a>六、对比</h2><table>
-<thead>
-<tr>
-<th style="text-align:left"></th>
-<th style="text-align:left"></th>
-<th style="text-align:left">CCS06</th>
-<th style="text-align:left">MuPQ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">功能性分析</td>
-<td style="text-align:left">多关键字</td>
-<td style="text-align:left">不支持</td>
-<td style="text-align:left">支持</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">用户组细分</td>
-<td style="text-align:left">不支持</td>
-<td style="text-align:left">整个database只分为可访问与不可访问两类用户</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">多用户上传</td>
-<td style="text-align:left">不支持</td>
-<td style="text-align:left">支持</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">多用户下载</td>
-<td style="text-align:left">支持</td>
-<td style="text-align:left">支持</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">搜索/下载权限区分</td>
-<td style="text-align:left">不区分</td>
-<td style="text-align:left">不区分</td>
-</tr>
-<tr>
-<td style="text-align:left">效率分析</td>
-<td style="text-align:left">用户的新增和删除是否对其他用户透明</td>
-<td style="text-align:left">透明</td>
-<td style="text-align:left">不透明</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">搜索效率</td>
-<td style="text-align:left">O(1)</td>
-<td style="text-align:left">O(M)</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">服务器开销</td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left">安全性分析</td>
-<td style="text-align:left">search pattern</td>
-<td style="text-align:left">adaptive方案可以隐藏</td>
-<td style="text-align:left">可以隐藏</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">access pattern</td>
-<td style="text-align:left">不支持</td>
-<td style="text-align:left">不支持</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">结果验证</td>
-<td style="text-align:left">不支持</td>
-<td style="text-align:left">不支持</td>
-</tr>
-<tr>
-<td style="text-align:left">方案基础</td>
-<td style="text-align:left"></td>
-<td style="text-align:left">BE-based</td>
-<td style="text-align:left">Bilinear pairing</td>
-</tr>
-</tbody>
-</table>
-<h2 id="七、链接"><a href="#七、链接" class="headerlink" title="七、链接"></a>七、链接</h2><p><a href="https://pdfs.semanticscholar.org/e3c1/13aec5f07338888ac6253d64a55f58e2f7d8.pdf" target="_blank" rel="external">Paper</a></p>
+        <h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>该文章重点提出了一个三方模型，如下图所示，其中crawler被认为是可信任的，而server是不可信任的。该方案中，crawler利用Merkle hash tree对web pages 构造了一个authenticated data structure，利用bilinear pairing方法为web pages生成一个signed digest。其中（1）authenticated data structure发送给server供其查询；（2）signed digest为公开信息，供server为查询结果计算proof信息，以及供client对server的搜索结果进行验证。</p>
+<h2 id="结果验证"><a href="#结果验证" class="headerlink" title="结果验证"></a>结果验证</h2><p>该方法可以完成多关键字检测，并且可确保结果的正确性（correctness）、完整性（completeness）以及freshness。</p>
 
       
     </div>
@@ -450,14 +332,6 @@
           
             <a href="/tags/SSE/" rel="tag">#SSE</a>
           
-            <a href="/tags/database/" rel="tag">#database</a>
-          
-            <a href="/tags/privacy-preserving/" rel="tag">#privacy-preserving</a>
-          
-            <a href="/tags/bilinear-pairing/" rel="tag">#bilinear pairing</a>
-          
-            <a href="/tags/BLS-signature/" rel="tag">#BLS signature</a>
-          
         </div>
       
 
@@ -465,12 +339,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/30/Privacy-preserving Multi-keyword Text Search in the Cloud Supporting Similarity-based Ranking/" rel="next" title="Privacy-preserving Multi-keyword Text Search in the Cloud Supporting Similarity-based Ranking">
+                <i class="fa fa-chevron-left"></i> Privacy-preserving Multi-keyword Text Search in the Cloud Supporting Similarity-based Ranking
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/25/El Gamal-based Proxy Encryption Scheme/" rel="prev" title="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
-                Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/02/Decentralizing Privacy：Using Blockchain to Protect Personal Data/" rel="prev" title="Decentralizing Privacy：Using Blockchain to Protect Personal Data,USENIX security workshop,2015">
+                Decentralizing Privacy：Using Blockchain to Protect Personal Data,USENIX security workshop,2015 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -539,7 +417,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -547,7 +425,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -556,7 +434,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -603,7 +481,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、摘要"><span class="nav-number">1.</span> <span class="nav-text">一、摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要工作-（核心场景、框架或者算法）"><span class="nav-number">2.</span> <span class="nav-text">二、主要工作 （核心场景、框架或者算法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、优点（动机、算法、写作）"><span class="nav-number">3.</span> <span class="nav-text">三、优点（动机、算法、写作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><span class="nav-number">4.</span> <span class="nav-text">四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、可改进点（改进方法、启发）"><span class="nav-number">5.</span> <span class="nav-text">五、可改进点（改进方法、启发）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、对比"><span class="nav-number">6.</span> <span class="nav-text">六、对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、链接"><span class="nav-number">7.</span> <span class="nav-text">七、链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果验证"><span class="nav-number">2.</span> <span class="nav-text">结果验证</span></a></li></ol></div>
             
           </div>
         </section>

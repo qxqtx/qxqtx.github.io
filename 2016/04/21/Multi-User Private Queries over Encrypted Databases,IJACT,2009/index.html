@@ -1,0 +1,772 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="SSE,database,privacy-preserving,bilinear pairing,BLS signature," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Echo's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
+<meta property="og:url" content="http://www.qxqtxzj.cn/2016/04/21/Multi-User Private Queries over Encrypted Databases,IJACT,2009/index.html">
+<meta property="og:site_name" content="Echo's blog">
+<meta property="og:description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737be18736.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png">
+<meta property="og:updated_time" content="2016-04-25T13:57:52.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Multi-User Private Queries over Encrypted Databases,IJACT,2009">
+<meta name="twitter:description" content="本文通过bilinear pairing实现了加密数据库的**多用户上传和读取**。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Multi-User Private Queries over Encrypted Databases,IJACT,2009 | Echo's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Echo's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">make each day count</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Multi-User Private Queries over Encrypted Databases,IJACT,2009
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-21T09:16:30+08:00" content="2016-04-21">
+              2016-04-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/paper-reading/" itemprop="url" rel="index">
+                    <span itemprop="name">paper reading</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h2><p>将数据库存储在服务器上可以节省很多的维护成本，但是大多数的服务器都是不可信的，因此存储在其上的数据库需要进行加密。本文通过bilinear pairing实现了加密数据库的<strong>多用户上传和读取</strong>，适合数据库需要经常动态变化的情况。另外，该方案还实现了用户的新增和删除都对其他用户透明，减少了开销。</p>
+<h2 id="二、主要工作-（核心场景、框架或者算法）"><a href="#二、主要工作-（核心场景、框架或者算法）" class="headerlink" title="二、主要工作 （核心场景、框架或者算法）"></a>二、主要工作 （核心场景、框架或者算法）</h2><p>该加密方案主要涉及两个对称密钥e和k，其中密钥e用于加密和解密数据库记录，密钥k用于加密和解密index。密钥e通过可信密钥服务器直接分发给用户，每个用户的e都相同；而密钥k则与关键字一一对应，即不同的用户，只要关键字相同，就会得到相同的加密密钥k，而密钥k的计算需要通过bilinear pairing和BLS Short Signature实现，如下图所示。</p>
+<hr>
+<p>（一）首先是用户新增的过程，该过程中，由offline的线下服务器完成密钥的计算，生成密钥对（xu，ComKu），其中私钥xu以及用户加密数据库记录的对称密钥e发送给用户，ComKu发送给服务器存储，s是哈希列表的种子。</p>
+<center><br><img src="https://ooo.0o0.ooo/2016/04/20/5717377500e7c.png" alt=""><br></center>
+
+<hr>
+<p>（二）用户上传数据的过程，主要为双线性映射的过程。首先用户通过哈希列表以及随机数rw计算g1=hs(w)^rw∈G1发送给服务器（rw保证了安全性），服务器根据公钥ComKu返回映射到G2空间的值，用户再根据私钥解密得到生成Index的对称密钥K，使用k加密Index=<r,[r]k>，使用e加密record，上传给服务器。</r,[r]k></p>
+<center><br><img src="https://ooo.0o0.ooo/2016/04/20/571737be18736.png" alt=""><br></center>
+
+<hr>
+<p>（三）用户查询及下载数据的过程。首先用户根据私钥xu生成查询，上传给服务器，服务器根据该用户的公钥ComKu以及哈希映射计算用于加密该关键字的对称密钥k’，并且对Index列表中的每一个条目<r,[r]k>进行匹配，若r=[[r]k]k’,表示匹配成功，则该index对应的记录加入到返回给用户的队列中。</r,[r]k></p>
+<center><br><img src="https://ooo.0o0.ooo/2016/04/20/571737fa95f3c.png" alt=""><br></center>
+
+<hr>
+<p>（四）用户的撤销过程。只需要可信密钥服务器通知server删除相应的公钥comku，则该用户就无法进行读写。</p>
+<hr>
+<h2 id="三、优点（动机、算法、写作）"><a href="#三、优点（动机、算法、写作）" class="headerlink" title="三、优点（动机、算法、写作）"></a>三、优点（动机、算法、写作）</h2><ul>
+<li>实现了多用户的上传和下载，适用于数据库经常需要修改的情况</li>
+<li>支持多关键字（作者提了一句说实现方法很简单，但并没有说明细节）</li>
+<li>用户的新增和删除并不影响其他用户</li>
+</ul>
+<h2 id="四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><a href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）" class="headerlink" title="四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"></a>四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</h2><ul>
+<li>搜索效率为O(m)，m为record的数目，不适合大型的数据库。</li>
+<li>优化方案中提到了性能的优化，但仅限于特定的可以进行binary search的数据库</li>
+<li>可信密钥服务器只维护了一个主密钥Kum以及对称密钥e，整个数据库只分为可访问与不可访问两类用户。在该场景中是合理的，但在我们的场景中，每一个用户的文件都相当于一个小型数据库，每一个用户甚至每一个文件都需要区分可访问与不可访问。</li>
+<li>没有区分搜索权限和下载权限</li>
+</ul>
+<h2 id="五、可改进点（改进方法、启发）"><a href="#五、可改进点（改进方法、启发）" class="headerlink" title="五、可改进点（改进方法、启发）"></a>五、可改进点（改进方法、启发）</h2><ul>
+<li>order preserving？（由下一篇论文得到启发 ）</li>
+</ul>
+<h2 id="六、对比"><a href="#六、对比" class="headerlink" title="六、对比"></a>六、对比</h2><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+<th style="text-align:left">CCS06</th>
+<th style="text-align:left">MuPQ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">功能性分析</td>
+<td style="text-align:left">多关键字</td>
+<td style="text-align:left">不支持</td>
+<td style="text-align:left">支持</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">用户组细分</td>
+<td style="text-align:left">不支持</td>
+<td style="text-align:left">整个database只分为可访问与不可访问两类用户</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">多用户上传</td>
+<td style="text-align:left">不支持</td>
+<td style="text-align:left">支持</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">多用户下载</td>
+<td style="text-align:left">支持</td>
+<td style="text-align:left">支持</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">搜索/下载权限区分</td>
+<td style="text-align:left">不区分</td>
+<td style="text-align:left">不区分</td>
+</tr>
+<tr>
+<td style="text-align:left">效率分析</td>
+<td style="text-align:left">用户的新增和删除是否对其他用户透明</td>
+<td style="text-align:left">透明</td>
+<td style="text-align:left">不透明</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">搜索效率</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(M)</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">服务器开销</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">安全性分析</td>
+<td style="text-align:left">search pattern</td>
+<td style="text-align:left">adaptive方案可以隐藏</td>
+<td style="text-align:left">可以隐藏</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">access pattern</td>
+<td style="text-align:left">不支持</td>
+<td style="text-align:left">不支持</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">结果验证</td>
+<td style="text-align:left">不支持</td>
+<td style="text-align:left">不支持</td>
+</tr>
+<tr>
+<td style="text-align:left">方案基础</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">BE-based</td>
+<td style="text-align:left">Bilinear pairing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="七、链接"><a href="#七、链接" class="headerlink" title="七、链接"></a>七、链接</h2><p><a href="https://pdfs.semanticscholar.org/e3c1/13aec5f07338888ac6253d64a55f58e2f7d8.pdf" target="_blank" rel="external">Paper</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SSE/" rel="tag">#SSE</a>
+          
+            <a href="/tags/database/" rel="tag">#database</a>
+          
+            <a href="/tags/privacy-preserving/" rel="tag">#privacy-preserving</a>
+          
+            <a href="/tags/bilinear-pairing/" rel="tag">#bilinear pairing</a>
+          
+            <a href="/tags/BLS-signature/" rel="tag">#BLS signature</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/25/Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011/" rel="prev" title="Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011">
+                Shared and Searchable Encrypted Data for Untrusted Servers,JCS,2011 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="jane" />
+          <p class="site-author-name" itemprop="name">jane</p>
+          <p class="site-description motion-element" itemprop="description">eat well</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qxqtx" target="_blank" title="github">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、摘要"><span class="nav-number">1.</span> <span class="nav-text">一、摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要工作-（核心场景、框架或者算法）"><span class="nav-number">2.</span> <span class="nav-text">二、主要工作 （核心场景、框架或者算法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、优点（动机、算法、写作）"><span class="nav-number">3.</span> <span class="nav-text">三、优点（动机、算法、写作）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、缺点-（算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）"><span class="nav-number">4.</span> <span class="nav-text">四、缺点 （算法缺陷、写作逻辑漏洞、攻击场景漏洞、工作完成度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、可改进点（改进方法、启发）"><span class="nav-number">5.</span> <span class="nav-text">五、可改进点（改进方法、启发）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、对比"><span class="nav-number">6.</span> <span class="nav-text">六、对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、链接"><span class="nav-number">7.</span> <span class="nav-text">七、链接</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jane</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>
